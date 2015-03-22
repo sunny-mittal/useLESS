@@ -14,7 +14,7 @@ class Unused
     html_files.each do |file|
       File.open file, 'r' do |f|
         find_html_classes f
-        # find_html_ids f
+        find_html_ids f
       end
     end
   end
@@ -26,7 +26,7 @@ class Unused
     css_files.each do |file|
       File.open file, 'r' do |f|
         find_css_classes f
-        # find_css_ids f
+        find_css_ids f
       end
     end
   end
@@ -46,21 +46,42 @@ class Unused
     end
   end
 
+  def self.find_html_ids(file)
+    file.each_line do |line|
+      match = line.scan(/\s+id\s*=\s*['"]([\s*[\w\-]*\s*]*)['"]/).flatten
+      match.each do |m|
+        m.split(/\s+/).each do |id|
+          @html_ids << id
+        end
+      end
+    end
+  end
+
   def self.find_css_classes(file)
     file.each_line do |line|
-      match = line.scan(/\.(\D[\w\-]+)/).flatten
+      match = line.scan(/\.(\b\D[\w\-]+)/).flatten
       match.each do |klass|
         @css_classes << klass
       end
     end
   end
 
-  def self.find_unused
-    symmetric_diff = (@css_classes | @html_classes) - (@css_classes & @html_classes)
-    puts "The following classes are not being used:"
-    symmetric_diff.to_a.each do |klass|
-      puts klass
+  def self.find_css_ids(file)
+    file.each_line do |line|
+      match = line.scan(/\#(\b\D[\w\-]+)/).flatten
+      match.each do |id|
+        @css_ids << id
+      end
     end
+  end
+
+  def self.find_unused
+    unused_classes = (@css_classes | @html_classes) - (@css_classes & @html_classes)
+    unused_ids = (@css_ids | @html_ids) - (@css_ids & @html_ids)
+    puts "The following classes are not being used:"
+    unused_classes.to_a.each { |klass| puts klass }
+    puts "The following IDs are not being used:"
+    unused_ids.to_a.each { |id| puts id }
   end
 end
 
