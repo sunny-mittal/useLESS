@@ -37,7 +37,7 @@ class Unused
 
   def self.find_html_classes(file)
     file.each_line do |line|
-      match = line.scan(/\s+class\s*=\s*['"]([\s*\w*\s*]*)['"]/).flatten
+      match = line.scan(/\s+class\s*=\s*['"]([\s*[\w\-]*\s*]*)['"]/).flatten
       match.each do |m|
         m.split(/\s+/).each do |klass|
           @html_classes << klass
@@ -63,3 +63,5 @@ class Unused
     end
   end
 end
+
+Unused.unused
