@@ -47,6 +47,7 @@ class Unused
   end
 
   def self.find_html_ids(file)
+    file.seek 0
     file.each_line do |line|
       match = line.scan(/\s+id\s*=\s*['"]([\s*[\w\-]*\s*]*)['"]/).flatten
       match.each do |m|
@@ -67,6 +68,7 @@ class Unused
   end
 
   def self.find_css_ids(file)
+    file.seek 0
     file.each_line do |line|
       match = line.scan(/\#(\b\D[\w\-]+)/).flatten
       match.each do |id|
