@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = UseLESS::VERSION
   spec.authors       = ["Sunny Mittal", "Erik Nilsen"]
   spec.email         = ["sunnymittal2003@gmail.com", "enilsen16@live.com"]
+
   spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
   spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
@@ -18,6 +19,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.8"
+  spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
 end
